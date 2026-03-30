@@ -1,73 +1,61 @@
-# React + TypeScript + Vite
+# The Movies app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a learning project built for practice and portfolio purposes. A React application that allows users to browse, search, and filter movies by genres using data from The Movie Database (TMDB) API.
+The project focuses on working with external APIs, client-side routing, query parameters, and scalable project structure.
 
-Currently, two official plugins are available:
+## Features
+- Browse movies with pagination;
+- Search movies by title (or part of title);
+- Filter movies by genres;
+- View detailed information about a selected movie;
+- URL-based state management (search, filters, pagination via query params);
+- Reusable and modular component structure;
+- API requests organized via service layer;
+- Responsive UI built with Tailwind CSS.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Getting Started
+1) Clone the repository
+```bash
+git clone git@github.com:yu-nykanorova/react_exam_movies.git
+cd movies-app
 ```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2) Install dependencies
+```bash
+npm install
 ```
+3) Set up environment variables     
+Create a .env file in the root folder with following data:
+
+VITE_API_URL=https://api.themoviedb.org/3
+VITE_TMDB_TOKEN=your_tmdb_token_here
+
+You can get your personal TMDB token for free from:
+https://www.themoviedb.org/settings/api
+
+4) Run the project
+```bash
+npm run dev
+```
+Open http://localhost:5173 to view it in the browser.
+
+### Environment Example
+If .env is not included in the repository, create it based on:
+
+.env.example
+
+VITE_API_URL=API_BASE_URL
+VITE_TMDB_TOKEN=YOUR_TMDB_TOKEN_HERE
+
+## Technologies Used
+- React + Vite
+- TypeScript
+- React Router DOM
+- Axios
+- Redux Toolkit
+- Tailwind CSS
+- The Movie Database (TMDB) API
+
+## Design
+The UI is inspired by modern movie web applications and design concepts from platforms like Dribbble.
+
+*Created by Yuliia Nykanorova*
