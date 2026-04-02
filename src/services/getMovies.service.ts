@@ -4,10 +4,15 @@ import type {IMovieDetails, IMovieShort} from "../models/movie/IMovie.ts";
 import type {IGenreResponse} from "../models/genre/IGenreResponse.ts";
 import type {IGenre} from "../models/genre/IGenre.ts";
 
-type GetMoviesParams = {
+export type GetMoviesParams = {
     genresIds?: number[];
     page?: number;
 };
+
+type SearchQueryParams = {
+    query: string;
+    page: number;
+}
 
 export const moviesService = {
     getMovies: async (params?: GetMoviesParams): Promise<IMovieShort[]> => {
@@ -31,8 +36,8 @@ export const moviesService = {
         const response = await getItems<IGenreResponse>("/genre/movie/list");
         return response.genres;
     },
-    searchMovies: async (query: string): Promise<IMovieShort[]> => {
-        const response = await getItems<IMovieResponse>(`/search/movie?query=${query}`);
+    searchMovies: async (query: SearchQueryParams): Promise<IMovieShort[]> => {
+        const response = await getItems<IMovieResponse>("/search/movie", query);
         return response.results;
     }
 };
