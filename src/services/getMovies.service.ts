@@ -9,7 +9,7 @@ export type GetMoviesParams = {
     page?: number;
 };
 
-type SearchQueryParams = {
+export type SearchQueryParams = {
     query: string;
     page: number;
 }

@@ -1,16 +1,18 @@
-import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejected, type PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, isPending, isRejected, type PayloadAction} from "@reduxjs/toolkit";
 import type {IMovieDetails, IMovieShort} from "../../models/movie/IMovie.ts";
-import {type GetMoviesParams, moviesService} from "../../services/getMovies.service.ts";
+import {type GetMoviesParams, moviesService, type SearchQueryParams} from "../../services/getMovies.service.ts";
 import {getError} from "../../helpers/getError.ts";
 
 type MovieSliceType = {
     movies: IMovieShort[];
+    searchedMovies: IMovieShort[];
     movie: IMovieDetails | null;
-    loadState: "succeed" | "loading" | "failed";
+    moviesListLoading: boolean;
+    movieDetailsLoading: boolean;
     error: string | null;
 }
 
-const initialState: MovieSliceType = {movies: [], movie: null, loadState: "succeed", error: null};
+const initialState: MovieSliceType = {movies: [], searchedMovies: [], movie: null, moviesListLoading: false, movieDetailsLoading: false, error: null};
 
 const loadMovies = createAsyncThunk(
     "movieSlice/loadMovies",
@@ -34,6 +36,18 @@ const loadMovie = createAsyncThunk(
             return thunkAPI.rejectWithValue(getError(error));
         }
     }
+);
+
+const loadSearchedMovies = createAsyncThunk(
+    "movieSlice/loadSearchedMovies",
+    async (query: SearchQueryParams, thunkAPI) => {
+        try {
+            const searchedMovies = await moviesService.searchMovies(query);
+            return thunkAPI.fulfillWithValue(searchedMovies);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(getError(error));
+        }
+    }
 )
 
 export const movieSlice = createSlice({
@@ -44,23 +58,41 @@ export const movieSlice = createSlice({
         builder
             .addCase(loadMovies.fulfilled, (state, action: PayloadAction<IMovieShort[]>) => {
                 state.movies = action.payload;
+                state.moviesListLoading = false;
+            })
+            .addCase(loadSearchedMovies.fulfilled, (state, action: PayloadAction<IMovieShort[]>) => {
+                state.searchedMovies = action.payload;
+                state.moviesListLoading = false;
             })
             .addCase(loadMovie.fulfilled, (state, action: PayloadAction<IMovieDetails>) => {
                 state.movie = action.payload;
+                state.movieDetailsLoading = false;
             })
-            .addMatcher(isPending(loadMovies, loadMovie), (state) => {
-                state.loadState = "loading";
-                state.error = null;
+            .addCase(loadMovie.pending, (state) => {
+                state.movieDetailsLoading = true;
                 state.movie = null;
             })
-            .addMatcher(isFulfilled(loadMovies, loadMovie), (state) => {
-                state.loadState = "succeed";
+            .addCase(loadMovie.rejected, (state) => {
+                state.movieDetailsLoading = false;
             })
-            .addMatcher(isRejected(loadMovies, loadMovie), (state, action) => {
-                state.loadState = "failed";
-                state.error = action.payload as string || "Error";
+            .addMatcher(isPending(loadMovies, loadSearchedMovies), (state) => {
+                state.moviesListLoading = true;
+            })
+            .addMatcher(isRejected(loadMovies, loadSearchedMovies), (state) => {
+                state.moviesListLoading = false;
+            })
+            .addMatcher(isPending(loadMovies, loadMovie, loadSearchedMovies), (state) => {
+                state.error = null;
+            })
+            .addMatcher(isRejected(loadMovies, loadMovie, loadSearchedMovies), (state, action) => {
+                state.error = (action.payload as string) ?? "Error";
             });
     }
 });
 
-export const movieSliceActions = {...movieSlice.actions, loadMovies, loadMovie};
+export const movieSliceActions = {
+    ...movieSlice.actions,
+    loadMovies,
+    loadMovie,
+    loadSearchedMovies
+};
