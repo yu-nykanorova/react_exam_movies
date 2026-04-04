@@ -8,8 +8,8 @@ type PosterPreviewProps = {
 
 export const PosterPreview: FC<PosterPreviewProps> = ({movie}) => {
     return (
-        <div>
-            <img src={getPosterUrl(movie.poster_path)} alt={movie.title}/>
+        <div className="h-70 rounded-t-md">
+            <img src={getPosterUrl(movie.poster_path)} alt={movie.title} className="w-full h-full object-cover rounded-t-md"/>
         </div>
     );
 };

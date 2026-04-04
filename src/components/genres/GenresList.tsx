@@ -6,15 +6,17 @@ type GenresListProps = {
     genres: IGenre[];
 }
 
+
 export const GenresList: FC<GenresListProps> = ({genres}) => {
+
     return (
-        <div className="p-2 flex gap-4 flex-wrap">
+        <div className="p-4 grid grid-cols-[repeat(auto-fill,minmax(120px,auto))] gap-2 whitespace-nowrap">
             {
                 genres.map(genre => (
                     <GenreBadge
                         key={genre.id}
-                        name={genre.name}
-                        className="px-3 py-2 text-brand-black bg-brand-light-blue font-semibold rounded-md"
+                        genre={genre}
+                        className="px-3 py-2 text-brand-white bg-brand-gray rounded-md cursor-pointer transition hover:text-brand-light-blue"
                     />
                 ))
             }
