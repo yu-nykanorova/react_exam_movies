@@ -1,20 +1,22 @@
 import {useSearchParams} from "react-router-dom";
 
-const TOTAL_PAGES = 500;
-
-export const Pagination = () => {
+export const Pagination = ({totalPages}: {totalPages: number}) => {
     const [searchParams, setSearchParams] = useSearchParams({page: "1"});
 
     let currentPage = Number(searchParams.get("page")) || 1;
 
     const handleClickPrev = () => {
         if (currentPage > 1) {
-            setSearchParams({page: String(--currentPage)});
+            const newParams = new URLSearchParams(String(searchParams));
+            newParams.set("page", String(currentPage - 1));
+            setSearchParams(newParams);
         }
     }
 
     const handleClickNext = () => {
-        setSearchParams({page: String(++currentPage)});
+        const newParams = new URLSearchParams(String(searchParams));
+        newParams.set("page", String(currentPage + 1));
+        setSearchParams(newParams);
     }
 
     return (
@@ -22,15 +24,15 @@ export const Pagination = () => {
             <button
                 className="px-3 py-1 flex items-center justify-center text-brand-black text-xl bg-brand-light-blue rounded-md shadow-md enabled:hover:bg-brand-white transition disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
                 onClick={handleClickPrev}
-                disabled={currentPage === 1}
+                disabled={currentPage === 1 || currentPage > 500}
             >
                 Prev
             </button>
-            <div>{currentPage} / {TOTAL_PAGES}</div>
+            <div>{currentPage <= 500 ? currentPage : 0} / {totalPages <= 500 ? totalPages : 500}</div>
             <button
                 className="px-3 py-1 flex items-center justify-center text-brand-black text-xl bg-brand-light-blue rounded-md shadow-md enabled:hover:bg-brand-white transition disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
                 onClick={handleClickNext}
-                disabled={currentPage === TOTAL_PAGES}
+                disabled={currentPage >= totalPages}
             >
                 Next
             </button>

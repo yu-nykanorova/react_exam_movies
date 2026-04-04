@@ -11,14 +11,19 @@ export const GenreBadge: FC<GenreBadgeProps> = ({genre, className}) => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const handleClick = () => {
-        const selectedGenres = searchParams.get("genres");
+        const newParams = new URLSearchParams(String(searchParams));
+
+        const selectedGenres = newParams.get("genres");
         const genresArray = selectedGenres ? selectedGenres.split(",") : [];
 
         if (genresArray.includes(String(genre.id))) return;
 
         const updatedGenres = [...genresArray, String(genre.id)];
 
-        setSearchParams({genres: updatedGenres.join(",")});
+        newParams.set("genres", updatedGenres.join(","));
+        newParams.set("page", "1");
+
+        setSearchParams(newParams);
     };
 
     if (!genre) return null;

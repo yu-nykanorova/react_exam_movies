@@ -1,18 +1,19 @@
 import {createAsyncThunk, createSlice, isPending, isRejected, type PayloadAction} from "@reduxjs/toolkit";
 import type {IMovieDetails, IMovieShort} from "../../models/movie/IMovie.ts";
-import {type GetMoviesParams, moviesService, type SearchQueryParams} from "../../services/getMovies.service.ts";
+import {type GetMoviesParams, type MoviesResult, moviesService, type SearchQueryParams} from "../../services/getMovies.service.ts";
 import {getError} from "../../helpers/getError.ts";
 
 type MovieSliceType = {
     movies: IMovieShort[];
     searchedMovies: IMovieShort[];
     movie: IMovieDetails | null;
+    totalPages: number;
     moviesListLoading: boolean;
     movieDetailsLoading: boolean;
     error: string | null;
 }
 
-const initialState: MovieSliceType = {movies: [], searchedMovies: [], movie: null, moviesListLoading: false, movieDetailsLoading: false, error: null};
+const initialState: MovieSliceType = {movies: [], searchedMovies: [], movie: null, totalPages: 1, moviesListLoading: false, movieDetailsLoading: false, error: null};
 
 const loadMovies = createAsyncThunk(
     "movieSlice/loadMovies",
@@ -56,8 +57,9 @@ export const movieSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(loadMovies.fulfilled, (state, action: PayloadAction<IMovieShort[]>) => {
-                state.movies = action.payload;
+            .addCase(loadMovies.fulfilled, (state, action: PayloadAction<MoviesResult>) => {
+                state.movies = action.payload.movies;
+                state.totalPages = Math.min(action.payload.totalPages, 500);
                 state.moviesListLoading = false;
             })
             .addCase(loadSearchedMovies.fulfilled, (state, action: PayloadAction<IMovieShort[]>) => {

@@ -1,3 +1,10 @@
 @import "tailwindcss";
 @config "../tailwind.config.js";
 
+.loading {
+    @apply text-[24px] text-yellow-500 text-center;
+}
+
+.error {
+    @apply text-[20px] text-red-400 text-center;
+}

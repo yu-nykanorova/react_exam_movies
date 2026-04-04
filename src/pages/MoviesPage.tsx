@@ -12,10 +12,10 @@ import {useSearchParams} from "react-router-dom";
 export const MoviesPage = () => {
     const dispatch = useAppDispatch();
     const {genres, loading: loadingGenres, error: errorGenres} = useAppSelector(({genreSlice}) => genreSlice);
-    const {movies, moviesListLoading: loadingMovies, error: errorMovies} = useAppSelector(({movieSlice}) => movieSlice);
+    const {movies, totalPages, moviesListLoading: loadingMovies, error: errorMovies} = useAppSelector(({movieSlice}) => movieSlice);
     const [searchParams] = useSearchParams();
 
-    const currentPage = searchParams.get("page") || "1";
+    const currentPage = Number(searchParams.get("page") || "1");
 
     const selectedGenres = useMemo(() => {
         const paramGenres = searchParams.get("genres");
@@ -37,13 +37,13 @@ export const MoviesPage = () => {
     return (
         <>
             {!loadingMovies && !errorMovies && <MainPoster movie={mainMovie}/>}
-            {loadingGenres && <p className="text-[24px] text-yellow-500">Loading genres list...</p>}
-            {errorGenres && <p className="text-[20px] text-red-400">{errorGenres}</p>}
+            {loadingGenres && <p className="loading">Loading genres list...</p>}
+            {errorGenres && <p className="error">{errorGenres}</p>}
             {!loadingGenres && !errorGenres && <GenresList genres={genres}/>}
-            {loadingMovies && <p className="text-[24px] text-yellow-500">Loading movies list...</p>}
-            {errorMovies && <p className="text-[20px] text-red-400">{errorMovies}</p>}
+            {loadingMovies && <p className="loading">Loading movies list...</p>}
+            {errorMovies && <p className="error">{errorMovies}</p>}
             {!loadingMovies && !errorMovies && <MoviesList movies={movies}/>}
-            <Pagination/>
+            <Pagination totalPages={totalPages}/>
         </>
     );
 };
