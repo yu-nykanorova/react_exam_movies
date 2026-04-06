@@ -13,18 +13,22 @@ export const GenresList: FC<GenresListProps> = ({genres, selected}) => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const handleClick = (genre: IGenre) => {
-        const newParams = new URLSearchParams(String(searchParams));
-
+        const newParams = new URLSearchParams(searchParams.toString());
+        newParams.delete("searchQuery");
         const selectedGenres = newParams.get("genres");
         const genresArray = selectedGenres ? selectedGenres.split(",") : [];
 
-        if (genresArray.includes(String(genre.id))) {
-            genresArray.splice(genresArray.indexOf(String(genre.id)), 1)
+        const updatedGenres = !genresArray.includes(String(genre.id)) ?
+            [...genresArray, String(genre.id)]
+            :
+            genresArray.filter(item => item !== String(genre.id));
+
+        if (updatedGenres.length) {
+            newParams.set("genres", updatedGenres.join(","));
+        } else {
+            newParams.delete("genres");
         }
 
-        const updatedGenres = [...genresArray, String(genre.id)];
-
-        newParams.set("genres", updatedGenres.join(","));
         newParams.set("page", "1");
 
         setSearchParams(newParams);
@@ -37,7 +41,7 @@ export const GenresList: FC<GenresListProps> = ({genres, selected}) => {
                     <GenreBadge
                         key={genre.id}
                         genre={genre}
-                        className="px-3 py-2 text-brand-white bg-brand-gray rounded-md cursor-pointer transition hover:text-brand-light-blue"
+                        className={`px-3 py-1 rounded-md cursor-pointer transition text-[14px] ${!selected.includes(genre.id) ? "text-brand-white bg-brand-gray hover:text-brand-light-blue" : "text-brand-black font-semibold bg-brand-light-blue"}`}
                         onClick={() => handleClick(genre)}
                     />
                 ))

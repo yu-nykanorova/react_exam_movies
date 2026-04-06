@@ -25,7 +25,10 @@ export const MovieInfo: FC<MovieInfoProps> = ({movie}) => {
                             genre={genre}
                             className="px-1 text-[14px] text-brand-black bg-brand-light-gray rounded-md"
                         />
-                    ))
+                    )).slice(0, 6)
+                }
+                {
+                    movieGenres.length > 6 ? <span>. . .</span> : ""
                 }
             </div>
             <p>{shortOverview} . . .</p>

@@ -62,8 +62,9 @@ export const movieSlice = createSlice({
                 state.totalPages = Math.min(action.payload.totalPages, 500);
                 state.moviesListLoading = false;
             })
-            .addCase(loadSearchedMovies.fulfilled, (state, action: PayloadAction<IMovieShort[]>) => {
-                state.searchedMovies = action.payload;
+            .addCase(loadSearchedMovies.fulfilled, (state, action: PayloadAction<MoviesResult>) => {
+                state.searchedMovies = action.payload.movies;
+                state.totalPages = Math.min(action.payload.totalPages, 500);
                 state.moviesListLoading = false;
             })
             .addCase(loadMovie.fulfilled, (state, action: PayloadAction<IMovieDetails>) => {

@@ -44,9 +44,12 @@ export const moviesService = {
         const response = await getItems<IGenreResponse>("/genre/movie/list");
         return response.genres;
     },
-    searchMovies: async (query: SearchQueryParams): Promise<IMovieShort[]> => {
+    searchMovies: async (query: SearchQueryParams): Promise<MoviesResult> => {
         const response = await getItems<IMovieResponse>("/search/movie", query);
-        return response.results;
+        return {
+            movies: response.results,
+            totalPages: response.total_pages,
+        };
     }
 };
 

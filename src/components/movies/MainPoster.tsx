@@ -15,10 +15,10 @@ export const MainPoster: FC<MainPosterProps> = ({movie}) => {
         <>
             <div className="h-100 relative">
                 <div className="h-full">
-                    <img src={getPosterUrl(movie.backdrop_path)} alt={movie.title} className="w-full h-full object-cover"/>
+                    <img src={getPosterUrl(movie.backdrop_path, 780)} alt={movie.title} className="w-full h-full object-cover"/>
                 </div>
-                <div className="p-4 absolute bottom-2 left-2 bg-black/50 rounded-md">
-                    <h2 className="text-brand-light-blue text-[36px]">{movie.title}</h2>
+                <div className="w-1/2 p-4 absolute bottom-2 left-2 bg-black/60 rounded-md">
+                    <h2 className="mb-4 text-brand-light-blue text-[32px] leading-10">{movie.title}</h2>
                     <StarsRating rating={movie.vote_average}/>
                 </div>
             </div>

@@ -1,12 +1,60 @@
 import {SearchIcon} from "../icons/SearchIcon.tsx";
+import {useForm} from "react-hook-form";
+import {joiResolver} from "@hookform/resolvers/joi";
+import {searchValidator} from "../../validators/search.validator.ts";
+import {useSearchParams} from "react-router-dom";
+import {useEffect} from "react";
+
+type SearchFormParams = {
+    search: string;
+}
 
 export const Search = () => {
+    const {
+        handleSubmit,
+        register,
+        clearErrors,
+        reset,
+        formState: {errors},
+    } = useForm<SearchFormParams>({
+        mode: "onSubmit",
+        resolver: joiResolver(searchValidator)
+    });
+
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    useEffect(() => {
+        const searchQuery = searchParams.get("searchQuery") || "";
+        reset({search: searchQuery});
+    }, [searchParams, reset]);
+
+    const handleSearch = (data: SearchFormParams) => {
+        const newParams = new URLSearchParams(searchParams.toString());
+
+        newParams.set("searchQuery", data.search);
+        newParams.set("page", "1");
+        newParams.delete("genres")
+
+        setSearchParams(newParams);
+    }
+
     return (
-        <div className="h-8 flex items-center justify-between relative">
-            <input type="text" className="w-50 h-full p-1 bg-brand-gray rounded-md"/>
-            <div className="h-full p-1 absolute right-0 flex items-center justify-center cursor-pointer">
+        <form className="h-8 flex items-center justify-between relative" onSubmit={handleSubmit(handleSearch)}>
+            <input
+                type="text"
+                {...register("search")}
+                onBlur={() => clearErrors("search")}
+                className="w-70 h-full p-1 bg-brand-gray rounded-md"
+            />
+            {
+                errors.search &&
+                <div className="w-full p-0.5 absolute -bottom-full text-[14px] text-red-800 bg-white/90 rounded-md">
+                    {errors.search?.message}
+                </div>
+            }
+            <button className="h-full p-1 absolute right-0 flex items-center justify-center cursor-pointer">
                 <SearchIcon/>
-            </div>
-        </div>
+            </button>
+        </form>
     );
 };
