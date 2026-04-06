@@ -9,14 +9,26 @@ type MovieProps = {
     movie: IMovieShort;
 }
 
+// export const MoviesListCard: FC<MovieProps> = ({movie}) => {
+//     return (
+//         <li className="pb-2 flex flex-col gap-2 bg-brand-gray rounded-md shadow-md">
+//             <Link to={`movie/${movie.id}`}>
+//                 <PosterPreview movie={movie}/>
+//                 <MovieInfo movie={movie}/>
+//                 <StarsRating rating={movie.vote_average}/>
+//             </Link>
+//         </li>
+//     );
+// };
+
 export const MoviesListCard: FC<MovieProps> = ({movie}) => {
     return (
         <li className="pb-2 flex flex-col gap-2 bg-brand-gray rounded-md shadow-md">
-            <Link to={`movie/${movie.id}`}>
+            <div>
                 <PosterPreview movie={movie}/>
                 <MovieInfo movie={movie}/>
                 <StarsRating rating={movie.vote_average}/>
-            </Link>
+            </div>
         </li>
     );
 };

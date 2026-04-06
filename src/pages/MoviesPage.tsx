@@ -39,7 +39,7 @@ export const MoviesPage = () => {
             {!loadingMovies && !errorMovies && <MainPoster movie={mainMovie}/>}
             {loadingGenres && <p className="loading">Loading genres list...</p>}
             {errorGenres && <p className="error">{errorGenres}</p>}
-            {!loadingGenres && !errorGenres && <GenresList genres={genres}/>}
+            {!loadingGenres && !errorGenres && <GenresList genres={genres} selected={selectedGenres}/>}
             {loadingMovies && <p className="loading">Loading movies list...</p>}
             {errorMovies && <p className="error">{errorMovies}</p>}
             {!loadingMovies && !errorMovies && <MoviesList movies={movies}/>}
