@@ -26,11 +26,16 @@ npm install
 3) Set up environment variables     
 Create a .env file in the root folder with following data:
 
-VITE_API_URL=https://api.themoviedb.org/3
+VITE_API_URL=https://api.themoviedb.org/3           
 VITE_TMDB_TOKEN=your_tmdb_token_here
 
 You can get your personal TMDB token for free from:
 https://www.themoviedb.org/settings/api
+
+OR
+
+use this token:
+eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZTcyYzA4YzViNzk2MzA0YzI3NmVkYmVlNmRkMTBkYSIsIm5iZiI6MTc3MzQwMDQ3OC4zNTAwMDAxLCJzdWIiOiI2OWIzZjE5ZTRkNTQ2Njk0NmZjYmRiYWYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.h7_rpb-jwHDrGnmWm_etwztuZ3f7EtUdHgi76wxFYf4
 
 4) Run the project
 ```bash
@@ -38,20 +43,13 @@ npm run dev
 ```
 Open http://localhost:5173 to view it in the browser.
 
-### Environment Example
-If .env is not included in the repository, create it based on:
-
-.env.example
-
-VITE_API_URL=API_BASE_URL
-VITE_TMDB_TOKEN=YOUR_TMDB_TOKEN_HERE
-
 ## Technologies Used
 - React + Vite
 - TypeScript
 - React Router DOM
 - Axios
 - Redux Toolkit
+- Validation library Joi
 - Tailwind CSS
 - The Movie Database (TMDB) API
 
