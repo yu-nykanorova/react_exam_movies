@@ -1,6 +1,6 @@
-import {StarFull} from "../icons/stars/StarFull.tsx";
-import {StarHalf} from "../icons/stars/StarHalf.tsx";
-import {StarEmpty} from "../icons/stars/StarEmpty.tsx";
+import {StarFull} from "../icons/StarFull.tsx";
+import {StarHalf} from "../icons/StarHalf.tsx";
+import {StarEmpty} from "../icons/StarEmpty.tsx";
 import type {FC} from "react";
 
 type StarsRatingProps = {

@@ -8,8 +8,8 @@ import {genreSliceActions} from "../store/slices/genreSlice.ts";
 import {GenresList} from "../components/genres/GenresList.tsx";
 import {Pagination} from "../components/pagination/Pagination.tsx";
 import {useSearchParams} from "react-router-dom";
-import {ErrorComponent} from "../components/ErrorComponent.tsx";
-import {Loader} from "../components/Loader.tsx";
+import {ErrorComponent} from "../components/ui/ErrorComponent.tsx";
+import {Loader} from "../components/ui/Loader.tsx";
 
 export const MoviesPage = () => {
     const dispatch = useAppDispatch();

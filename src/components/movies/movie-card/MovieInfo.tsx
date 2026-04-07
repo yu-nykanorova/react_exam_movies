@@ -15,8 +15,8 @@ export const MovieInfo: FC<MovieInfoProps> = ({movie}) => {
     const shortOverview = movie.overview.split(" ").slice(0, 10).join(" ");
 
     return (
-        <div className="p-2 grid grid-rows-[50px_70px_80px] gap-2">
-            <h3 className="text-[22px] text-brand-light-blue leading-7">{movie.title}</h3>
+        <div className="p-2 grid grid-rows-[50px_50px_50px] gap-2 sm:grid-rows-[50px_70px_80px]">
+            <h3 className="text-[18px] text-brand-light-blue leading-7 sm:text-[22px]">{movie.title}</h3>
             <div className="flex items-center gap-2 flex-wrap self-start">
                 {
                     movieGenres.map(genre => (
@@ -31,7 +31,7 @@ export const MovieInfo: FC<MovieInfoProps> = ({movie}) => {
                     movieGenres.length > 5 ? <span> ...</span> : ""
                 }
             </div>
-            <p>{shortOverview} ...</p>
+            <p className="text-[14px] sm:text-md">{shortOverview} ...</p>
         </div>
     );
 };

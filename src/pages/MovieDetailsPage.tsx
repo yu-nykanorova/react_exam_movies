@@ -3,8 +3,8 @@ import {useAppSelector} from "../store/hooks/useAppSelector.tsx";
 import {useAppDispatch} from "../store/hooks/useAppDispatch.tsx";
 import {useEffect} from "react";
 import {movieSliceActions} from "../store/slices/movieSlice.ts";
-import {Loader} from "../components/Loader.tsx";
-import {ErrorComponent} from "../components/ErrorComponent.tsx";
+import {Loader} from "../components/ui/Loader.tsx";
+import {ErrorComponent} from "../components/ui/ErrorComponent.tsx";
 import {getPosterUrl} from "../helpers/getPosterUrl.ts";
 import {StarsRating} from "../components/movies/StarsRating.tsx";
 import {GenreBadge} from "../components/genres/GenreBadge.tsx";
@@ -35,29 +35,29 @@ export const MovieDetailsPage = () => {
     return (
         <>
             <div>
-                <div className="h-100 relative">
+                <div className="h-70 relative sm:h-100">
                     <div className="w-full h-full">
                         <img src={getPosterUrl(movie.backdrop_path, 780)} alt={movie.title} className="w-full h-full object-cover"/>
                     </div>
-                    <div className="absolute w-1/3 right-0 bottom-0 top-0 p-6 flex flex-col justify-center items-end gap-6 bg-black/40">
+                    <div className="absolute w-full right-0 left-0 bottom-0 p-1 flex flex-col justify-center items-end gap-2 bg-black/40 md:p-6 md:w-2/5 md:top-0 md:left-[initial] md:gap-6">
                         <StarsRating className="flex flex-col items-end" rating={movie.vote_average} votes={movie.vote_count}/>
-                        <div className="flex flex-col items-end">
+                        <div className="flex gap-1 items-end text-xs md:flex-col md:text-[16px]">
                             {
                                 movie.genres.map((genre) => (
                                     <GenreBadge key={genre.id} genre={genre}/>
                                 ))
                             }
                         </div>
-                        <h1 className="text-[36px] text-brand-light-blue text-right leading-10">{movie.title}</h1>
+                        <h1 className="text-[26px] text-brand-light-blue text-right leading-10 sm:text-[32px] md:text-[36px]">{movie.title}</h1>
                     </div>
                 </div>
                 <div className="h-[calc(100vh-400px)] bg-brand-gray">
-                    <div className="px-6 py-6 bg-brand-light-gray">
+                    <div className="p-2 bg-brand-light-gray md:p-6">
                         <h2 className="text-brand-black">Original title: <span
-                        className="text-brand-gray text-[22px] font-semibold">{movie.title}</span></h2>
-                        <p className="text-brand-gray text-[14px]">Original language: {movie.original_language}</p>
+                        className="text-brand-gray text-[16px] font-semibold md:text-[22px]">{movie.title}</span></h2>
+                        <p className="text-brand-gray text-[12px] md:text-[14px]">Original language: {movie.original_language}</p>
                     </div>
-                    <div className="px-6 py-6 flex flex-row-reverse justify-between gap-8 bg-brand-gray">
+                    <div className="p-2 flex flex-col-reverse justify-between gap-8 bg-brand-gray md:flex-row-reverse md:p-4">
                         <div>
                             <p className="mb-4 text-[20px]">Production companies:</p>
                             <ul>

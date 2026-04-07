@@ -44,7 +44,7 @@ export const Search = () => {
                 type="text"
                 {...register("search")}
                 onBlur={() => clearErrors("search")}
-                className="w-70 h-full p-1 bg-brand-gray rounded-md"
+                className="w-40 h-full p-1 bg-brand-gray rounded-md sm:w-70"
             />
             {
                 errors.search &&

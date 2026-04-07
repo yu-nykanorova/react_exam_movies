@@ -6,7 +6,7 @@ import {SettingsIcon} from "../icons/SettingsIcon.tsx";
 
 export const SidebarMenu = () => {
     const menuLinkClass = ({isActive}: {isActive: boolean}): string => {
-        return `flex items-center gap-2 hover:text-brand-light-blue ${isActive ? "text-brand-light-blue" : ""}`;
+        return `flex items-center justify-center gap-2 hover:text-brand-light-blue sm:justify-start ${isActive ? "text-brand-light-blue" : ""}`;
     }
 
     return (
@@ -15,25 +15,25 @@ export const SidebarMenu = () => {
                 <li>
                     <NavLink to={"/"} className={menuLinkClass}>
                         <HomeIcon/>
-                        <p className="text-sm">Home</p>
+                        <p className="text-sm hidden sm:block">Home</p>
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to={"/favorites"} className={menuLinkClass}>
                         <HeartIcon/>
-                        <p className="text-sm">Favorites</p>
+                        <p className="text-sm hidden sm:block">Favorites</p>
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to={"/upcoming"} className={menuLinkClass}>
                         <CalendarIcon/>
-                        <p className="text-sm">Coming soon</p>
+                        <p className="text-sm hidden sm:block">Coming soon</p>
                     </NavLink>
                 </li>
                 <li>
                     <NavLink to={"/settings"} className={menuLinkClass}>
                         <SettingsIcon/>
-                        <p className="text-sm">Settings</p>
+                        <p className="text-sm hidden sm:block">Settings</p>
                     </NavLink>
                 </li>
             </ul>
