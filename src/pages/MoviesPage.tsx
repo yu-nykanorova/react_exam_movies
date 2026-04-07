@@ -8,6 +8,8 @@ import {genreSliceActions} from "../store/slices/genreSlice.ts";
 import {GenresList} from "../components/genres/GenresList.tsx";
 import {Pagination} from "../components/pagination/Pagination.tsx";
 import {useSearchParams} from "react-router-dom";
+import {ErrorComponent} from "../components/ErrorComponent.tsx";
+import {Loader} from "../components/Loader.tsx";
 
 export const MoviesPage = () => {
     const dispatch = useAppDispatch();
@@ -38,26 +40,43 @@ export const MoviesPage = () => {
 
     }, [currentPage, selectedGenres, searchQuery, dispatch]);
 
-    // if (searchQuery && !searchedMovies.length) {
-    //     return <div>No results matching your query</div>
-    // }
-
     const moviesToShow = searchQuery ? searchedMovies : movies;
 
     const mainMovie = moviesToShow.length
         ? [...moviesToShow].sort((a, b) => b.vote_average - a.vote_average)[0]
         : null;
 
+    if (errorMovies) {
+        return <ErrorComponent message={errorMovies}/>
+    }
+
+    if (!loadingMovies && searchQuery && !searchedMovies.length) {
+        return <ErrorComponent message={"No results matching your query"}/>
+    }
+
     return (
         <>
-            {!loadingMovies && !errorMovies && <MainPoster movie={mainMovie}/>}
-            {loadingGenres && <p className="loading">Loading genres list...</p>}
-            {errorGenres && <p className="error">{errorGenres}</p>}
-            {!loadingGenres && !errorGenres && <GenresList genres={genres} selected={selectedGenres}/>}
-            {loadingMovies && <p className="loading">Loading movies list...</p>}
-            {errorMovies && <p className="error">{errorMovies}</p>}
-            {!loadingMovies && !errorMovies && <MoviesList movies={moviesToShow}/>}
-            <Pagination totalPages={totalPages}/>
+            {
+                !loadingMovies && <MainPoster movie={mainMovie}/>
+            }
+            {
+                loadingGenres && <Loader/>
+            }
+            {
+                errorGenres && <ErrorComponent message={errorGenres}/>
+            }
+            {
+                !loadingGenres && !errorGenres && <GenresList genres={genres} selected={selectedGenres}/>
+            }
+            {
+                loadingMovies
+                    ? <Loader/>
+                    : <MoviesList movies={moviesToShow}/>
+            }
+            {
+                !loadingMovies &&
+                <Pagination totalPages={totalPages}/>
+            }
         </>
     );
 };

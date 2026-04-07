@@ -11,7 +11,7 @@ export const SidebarMenu = () => {
 
     return (
         <nav>
-            <ul className="flex flex-col gap-8">
+            <ul className="flex flex-col gap-10">
                 <li>
                     <NavLink to={"/"} className={menuLinkClass}>
                         <HomeIcon/>

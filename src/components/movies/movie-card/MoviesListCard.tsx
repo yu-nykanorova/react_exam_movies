@@ -15,7 +15,7 @@ export const MoviesListCard: FC<MovieProps> = ({movie}) => {
             <Link to={`movie/${movie.id}`}>
                 <PosterPreview movie={movie}/>
                 <MovieInfo movie={movie}/>
-                <StarsRating rating={movie.vote_average}/>
+                <StarsRating rating={movie.vote_average} votes={movie.vote_count}/>
             </Link>
         </li>
     );

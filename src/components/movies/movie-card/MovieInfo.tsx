@@ -15,7 +15,7 @@ export const MovieInfo: FC<MovieInfoProps> = ({movie}) => {
     const shortOverview = movie.overview.split(" ").slice(0, 10).join(" ");
 
     return (
-        <div className="p-2 grid grid-rows-[50px_50px_80px] gap-2">
+        <div className="p-2 grid grid-rows-[50px_70px_80px] gap-2">
             <h3 className="text-[22px] text-brand-light-blue leading-7">{movie.title}</h3>
             <div className="flex items-center gap-2 flex-wrap self-start">
                 {
@@ -25,13 +25,13 @@ export const MovieInfo: FC<MovieInfoProps> = ({movie}) => {
                             genre={genre}
                             className="px-1 text-[14px] text-brand-black bg-brand-light-gray rounded-md"
                         />
-                    )).slice(0, 6)
+                    )).slice(0, 5)
                 }
                 {
-                    movieGenres.length > 6 ? <span>. . .</span> : ""
+                    movieGenres.length > 5 ? <span> ...</span> : ""
                 }
             </div>
-            <p>{shortOverview} . . .</p>
+            <p>{shortOverview} ...</p>
         </div>
     );
 };

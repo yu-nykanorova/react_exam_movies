@@ -11,7 +11,7 @@ export const MoviesList: FC<MoviesProps> = ({movies}) => {
     return (
         <>
 
-            <ul className="p-4 grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-6">
+            <ul className="p-4 grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
                 {
                     movies.map(movie => (
                         <MoviesListCard key={movie.id} movie={movie}/>
