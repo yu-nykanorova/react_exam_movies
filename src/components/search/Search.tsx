@@ -2,7 +2,7 @@ import {SearchIcon} from "../icons/SearchIcon.tsx";
 import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {searchValidator} from "../../validators/search.validator.ts";
-import {useSearchParams} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import {useEffect} from "react";
 
 type SearchFormParams = {
@@ -21,7 +21,8 @@ export const Search = () => {
         resolver: joiResolver(searchValidator)
     });
 
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const searchQuery = searchParams.get("searchQuery") || "";
@@ -31,11 +32,11 @@ export const Search = () => {
     const handleSearch = (data: SearchFormParams) => {
         const newParams = new URLSearchParams(searchParams.toString());
 
-        newParams.set("searchQuery", data.search);
-        newParams.set("page", "1");
         newParams.delete("genres")
+        newParams.set("page", "1");
+        newParams.set("searchQuery", data.search);
 
-        setSearchParams(newParams);
+        navigate(`/?${newParams.toString()}`);
     }
 
     return (
