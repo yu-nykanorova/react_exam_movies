@@ -59,19 +59,26 @@ export const MovieDetailsPage = () => {
                     </div>
                     <div className="p-2 flex flex-col-reverse justify-between gap-8 bg-brand-gray md:flex-row-reverse md:p-4">
                         <div>
-                            <p className="mb-4 text-[20px]">Production companies:</p>
-                            <ul>
-                                {
-                                    movie.production_companies.map((company) => (
-                                        <li key={company.id} className="mb-2 flex items-center  justify-between gap-2 border-b border-b-brand-white">
-                                            <h3 className="text-[16px] text-brand-light-blue">{company.name} ({company.origin_country})</h3>
-                                            <div className="w-10 h-10 p-0.5 flex items-center bg-white/20">
-                                                <img src={getPosterUrl(company.logo_path, 200)} alt="company logo" className="object-cover"/>
-                                            </div>
-                                        </li>
-                                    ))
-                                }
-                            </ul>
+                            {
+                                movie.production_companies.length
+                                    ? <>
+                                        <p className="mb-4 text-[20px]">Production companies:</p>
+                                           <ul>
+                                                {
+                                                    movie.production_companies.map((company) => (
+                                                        <li key={company.id} className="mb-2 flex items-center  justify-between gap-2 border-b border-b-brand-white">
+                                                            <h3 className="text-[16px] text-brand-light-blue">{company.name} ({company.origin_country})</h3>
+                                                            <div className="w-10 h-10 p-0.5 flex items-center bg-white/20">
+                                                                <img src={getPosterUrl(company.logo_path, 200)} alt="company logo" className="object-cover"/>
+                                                            </div>
+                                                        </li>
+                                                    ))
+                                                }
+                                           </ul>
+                                        </>
+                                    : null
+                            }
+
                         </div>
                         <div className="flex-[0_0_60%]">
                             <p className="mb-4 text-[20px]">Overview:</p>
